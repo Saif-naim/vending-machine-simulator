@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理者画面</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <div class="admin-header">
+        <div>
+            <h1>管理者ダッシュボード</h1>
+            <p>商品・在庫・売上・購入履歴・釣銭を管理します。</p>
+        </div>
+
+        <div class="admin-header-links">
+            <a href="/" class="secondary-link">ユーザー画面</a>
+            <a href="/admin/logout" class="logout-link">ログアウト</a>
+        </div>
+    </div>
+
+    <div th:if="${message}" class="message" th:text="${message}">
+    </div>
+
+    <!-- Summary cards -->
+    <section class="summary-grid">
+
+        <div class="summary-card">
+            <span>累計売上</span>
+            <strong>
+                <span th:text="${totalSales}">0</span>円
+            </strong>
+        </div>
+
+        <div class="summary-card">
+            <span>販売数</span>
+            <strong th:text="${orderCount}">0</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>商品数</span>
+            <strong th:text="${productCount}">0</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>売切商品</span>
+            <strong th:text="${soldOutCount}">0</strong>
+        </div>
+
+    </section>
+
+    <!-- Add product -->
+    <section class="admin-section">
+        <h2>商品追加</h2>
+
+        <form th:action="@{/admin/product/add}"
+              method="post"
+              class="admin-form">
+
+            <input type="text"
+                   name="productName"
+                   placeholder="商品名"
+                   required>
+
+            <input type="number"
+                   name="price"
+                   placeholder="価格"
+                   min="1"
+                   required>
+
+            <input type="number"
+                   name="stock"
+                   placeholder="初期在庫"
+                   min="0"
+                   required>
+
+            <button type="submit">商品を追加</button>
+        </form>
+    </section>
+
+    <!-- Product stock -->
+    <section class="admin-section">
+        <h2>商品在庫確認・補充・削除</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名</th>
+                    <th>価格</th>
+                    <th>在庫</th>
+                    <th>状態</th>
+                    <th>補充</th>
+                    <th>削除</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.productId}"></td>
+                    <td th:text="${product.productName}"></td>
+                    <td>
+                        <span th:text="${product.price}"></span>円
+                    </td>
+                    <td th:text="${product.stock}"></td>
+
+                    <td>
+                        <span th:if="${product.stock > 0}"
+                              class="status-ok">
+                            販売中
+                        </span>
+
+                        <span th:if="${product.stock <= 0}"
+                              class="status-danger">
+                            売切
+                        </span>
+                    </td>
+
+                    <td>
+                        <form th:action="@{/admin/product/replenish}"
+                              method="post"
+                              class="inline-form">
+
+                            <input type="hidden"
+                                   name="productId"
+                                   th:value="${product.productId}">
+
+                            <input type="number"
+                                   name="quantity"
+                                   min="1"
+                                   value="1"
+                                   required>
+
+                            <button type="submit">補充</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form th:action="@{/admin/product/delete}"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="productId"
+                                   th:value="${product.productId}">
+
+                            <button type="submit"
+                                    class="danger-button"
+                                    onclick="return confirm('この商品を削除しますか？');">
+                                削除
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Money stock -->
+    <section class="admin-section">
+        <h2>釣銭在庫確認・金種補充</h2>
+
+        <div class="money-stock-grid">
+
+            <div class="money-stock-card"
+                 th:each="money : ${moneyStocks}">
+
+                <h3>
+                    <span th:text="${money.moneyType}"></span>円
+                </h3>
+
+                <p>
+                    在庫：
+                    <strong th:text="${money.stockCount}"></strong>枚
+                </p>
+
+                <form th:action="@{/admin/money/replenish}"
+                      method="post">
+
+                    <input type="hidden"
+                           name="moneyType"
+                           th:value="${money.moneyType}">
+
+                    <input type="number"
+                           name="count"
+                           min="1"
+                           value="1"
+                           required>
+
+                    <button type="submit">補充</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Purchase history -->
+    <section class="admin-section">
+        <h2>購入履歴</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>注文ID</th>
+                    <th>商品ID</th>
+                    <th>購入金額</th>
+                    <th>購入日時</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.orderId}"></td>
+                    <td th:text="${order.productId}"></td>
+                    <td>
+                        <span th:text="${order.purchasePrice}"></span>円
+                    </td>
+                    <td th:text="${order.purchaseDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Sales history -->
+    <section class="admin-section">
+        <h2>売上一覧</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>売上ID</th>
+                    <th>注文ID</th>
+                    <th>商品ID</th>
+                    <th>売上金額</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="sale : ${sales}">
+                    <td th:text="${sale.salesId}"></td>
+                    <td th:text="${sale.orderId}"></td>
+                    <td th:text="${sale.productId}"></td>
+                    <td>
+                        <span th:text="${sale.salesAmount}"></span>円
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

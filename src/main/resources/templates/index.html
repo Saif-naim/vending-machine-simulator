@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自動販売機</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="vending-body">
+
+<div class="vending-machine">
+
+    <header class="machine-header">
+        <div>
+            <p class="machine-small-title">DRINK STATION</p>
+            <h1>自動販売機</h1>
+        </div>
+
+        <a th:href="@{/admin/login}" class="admin-button">
+            管理者画面
+        </a>
+    </header>
+
+    <div class="display-panel">
+
+        <span>投入金額</span>
+
+        <strong>
+            ¥<span th:text="${insertedMoney}">0</span>
+        </strong>
+
+    </div>
+
+    <div th:if="${message}"
+         class="user-message"
+         th:text="${message}">
+    </div>
+
+    <!-- Product area -->
+    <section class="vending-window">
+
+        <div class="vending-products">
+
+            <article class="vending-product"
+                     th:each="product : ${products}"
+                     th:classappend="
+                        ${product.stock <= 0}
+                            ? ' product-sold-out'
+                            : (${insertedMoney >= product.price}
+                                ? ' product-buyable'
+                                : ' product-unavailable')">
+
+                <div class="drink-image">
+                    <span>🥤</span>
+                </div>
+
+                <h2 th:text="${product.productName}">
+                    商品名
+                </h2>
+
+                <p class="drink-price">
+                    ¥<span th:text="${product.price}">100</span>
+                </p>
+
+                <div class="product-status">
+
+                    <span th:if="${product.stock <= 0}"
+                          class="sold-out-label">
+                        売切
+                    </span>
+
+                    <span th:if="${product.stock > 0
+                                  and insertedMoney >= product.price}"
+                          class="buyable-label">
+                        購入可能
+                    </span>
+
+                    <span th:if="${product.stock > 0
+                                  and insertedMoney < product.price}"
+                          class="unavailable-label">
+                        金額不足
+                    </span>
+
+                </div>
+
+                <form th:action="@{/purchase}" method="post">
+
+                    <input type="hidden"
+                           name="productId"
+                           th:value="${product.productId}">
+
+                    <button type="submit"
+                            class="purchase-button"
+                            th:disabled="${product.stock <= 0
+                                or insertedMoney < product.price}">
+
+                        <span th:if="${product.stock <= 0}">
+                            売切
+                        </span>
+
+                        <span th:if="${product.stock > 0}">
+                            購入
+                        </span>
+
+                    </button>
+
+                </form>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- Money area -->
+<!-- Money area -->
+<section class="payment-panel">
+
+    <div class="money-box">
+
+        <h2>お金を入れてください</h2>
+
+        <form th:action="@{/money}" method="post">
+
+            <input
+                type="number"
+                name="money"
+                placeholder="金額を入力してください"
+                min="1"
+                required>
+
+            <button type="submit">
+                投入
+            </button>
+
+        </form>
+
+        <p class="money-note">
+            利用可能金種：10円・50円・100円・500円・1000円
+        </p>
+
+    </div>
+
+    <form th:action="@{/return-money}"
+          method="post"
+          class="return-form">
+
+        <button type="submit"
+                class="return-money-button">
+            お金を返却
+        </button>
+
+    </form>
+
+</section>
+
+    <div class="product-output">
+        <span>商品取出口</span>
+    </div>
+
+</div>
+
+</body>
+</html>

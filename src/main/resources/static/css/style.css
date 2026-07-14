@@ -1,0 +1,708 @@
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+    color: #222;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header a,
+.login-box a {
+    text-decoration: none;
+}
+
+.balance {
+    margin: 20px 0;
+    padding: 18px;
+    text-align: center;
+    font-size: 26px;
+    background: #e8f5e9;
+    border-radius: 10px;
+}
+
+.money-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.money-buttons form {
+    display: inline-block;
+    margin: 5px;
+}
+
+button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    background: #1976d2;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.return-button {
+    background: #e65100;
+}
+
+.products {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    padding: 22px;
+    text-align: center;
+    border: 3px solid #ddd;
+    border-radius: 14px;
+    transition: 0.25s;
+}
+
+.product-card.buyable {
+    border-color: #2e7d32;
+    background: #e8f5e9;
+    transform: translateY(-4px);
+}
+
+.product-card.unavailable {
+    border-color: #f9a825;
+    background: #fffde7;
+}
+
+.product-card.sold-out {
+    border-color: #c62828;
+    background: #ffebee;
+    opacity: 0.75;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.buyable-text {
+    color: #2e7d32;
+}
+
+.sold-text {
+    color: #c62828;
+}
+
+.message {
+    background: #e3f2fd;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.error {
+    color: #c62828;
+}
+
+.login-box {
+    width: 350px;
+    margin: 100px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.login-box input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #263238;
+    color: white;
+}
+
+td input[type="number"] {
+    width: 60px;
+    padding: 8px;
+}
+.admin-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.admin-header h1 {
+    margin-bottom: 5px;
+}
+
+.admin-header p {
+    margin: 0;
+    color: #666;
+}
+
+.admin-header-links {
+    display: flex;
+    gap: 10px;
+}
+
+.secondary-link,
+.logout-link {
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.secondary-link {
+    background: #eceff1;
+    color: #263238;
+}
+
+.logout-link {
+    background: #c62828;
+    color: white;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card span {
+    color: #666;
+}
+
+.summary-card strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 28px;
+}
+
+.admin-section {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.admin-section h2 {
+    margin-top: 0;
+}
+
+.admin-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 12px;
+}
+
+.admin-form input,
+.inline-form input,
+.money-stock-card input {
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.inline-form {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.inline-form input {
+    width: 70px;
+}
+
+.danger-button {
+    background: #c62828;
+}
+
+.money-stock-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.money-stock-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    background: #fafafa;
+}
+
+.money-stock-card h3 {
+    margin-top: 0;
+}
+
+.status-ok {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.status-danger {
+    color: #c62828;
+    font-weight: bold;
+}
+
+@media (max-width: 900px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .money-stock-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+/* ==================================
+   Real Vending Machine User Design
+================================== */
+
+.vending-body {
+    margin: 0;
+    padding: 35px 15px;
+    min-height: 100vh;
+    font-family: Arial, "Yu Gothic", sans-serif;
+    background:
+        linear-gradient(135deg, #1f2937, #111827);
+}
+
+.vending-machine {
+    width: min(1050px, 95%);
+    margin: auto;
+    padding: 28px;
+    background:
+        linear-gradient(145deg, #d71920, #9f1015);
+    border: 8px solid #72090d;
+    border-radius: 35px;
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45),
+        inset 0 4px 8px rgba(255, 255, 255, 0.25);
+}
+
+.machine-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.machine-header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.machine-small-title {
+    margin: 0 0 4px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    opacity: 0.8;
+}
+
+.admin-button {
+    padding: 11px 18px;
+    border-radius: 9px;
+    background: #202020;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.admin-button:hover {
+    background: #000;
+}
+
+.display-panel {
+    width: 250px;
+    margin: 0 0 22px auto;
+    padding: 14px 20px;
+    background: #08130c;
+    border: 4px solid #333;
+    border-radius: 10px;
+    color: #4cff83;
+    text-align: right;
+    box-shadow: inset 0 0 15px rgba(76, 255, 131, 0.18);
+}
+
+.display-panel span {
+    display: block;
+    color: #b7ffcb;
+    font-size: 13px;
+}
+
+.display-panel strong {
+    font-family: monospace;
+    font-size: 36px;
+}
+
+.user-message {
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    background: #fff8d8;
+    border-left: 6px solid #ffb300;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.vending-window {
+    padding: 24px;
+    background:
+        linear-gradient(180deg, #e8f3f8, #bccbd2);
+    border: 8px solid #5d1417;
+    border-radius: 20px;
+    box-shadow:
+        inset 0 0 18px rgba(0, 0, 0, 0.25);
+}
+
+.vending-products {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(175px, 1fr));
+    gap: 18px;
+}
+
+.vending-product {
+    position: relative;
+    padding: 18px 14px;
+    background: white;
+    border: 5px solid #bbb;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow:
+        0 7px 12px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+}
+
+.vending-product:hover {
+    transform: translateY(-4px);
+}
+
+.product-buyable {
+    border-color: #19a44b;
+    box-shadow:
+        0 0 18px rgba(25, 164, 75, 0.65);
+}
+
+.product-unavailable {
+    border-color: #efb517;
+}
+
+.product-sold-out {
+    border-color: #c62828;
+    background: #e5e5e5;
+    opacity: 0.72;
+}
+
+.drink-image {
+    height: 95px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background:
+        linear-gradient(180deg, #f8fafc, #dbe5ea);
+}
+
+.drink-image span {
+    font-size: 64px;
+}
+
+.vending-product h2 {
+    margin: 8px 0;
+    font-size: 21px;
+    color: #222;
+}
+
+.drink-price {
+    display: inline-block;
+    margin: 4px 0 10px;
+    padding: 4px 14px;
+    background: #161616;
+    border-radius: 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product-status {
+    height: 28px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.buyable-label {
+    color: #12833b;
+}
+
+.unavailable-label {
+    color: #bb8100;
+}
+
+.sold-out-label {
+    color: #c62828;
+}
+
+.purchase-button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 30px;
+    background:
+        linear-gradient(180deg, #2fd667, #159843);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow:
+        0 5px 0 #0b6e2d;
+}
+
+.purchase-button:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #0b6e2d;
+}
+
+.purchase-button:disabled {
+    background: #989898;
+    box-shadow: 0 5px 0 #666;
+    cursor: not-allowed;
+}
+
+.payment-panel {
+    margin-top: 22px;
+    padding: 22px;
+    background: #ececec;
+    border: 6px solid #5d1417;
+    border-radius: 18px;
+    text-align: center;
+}
+
+.payment-panel h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.coin-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.coin-buttons button {
+    min-width: 100px;
+    padding: 14px 16px;
+    border: 4px solid #555;
+    border-radius: 50px;
+    background:
+        linear-gradient(145deg, #f4f4f4, #a9a9a9);
+    color: #222;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow:
+        0 5px 0 #555;
+}
+
+.coin-buttons button:hover {
+    filter: brightness(1.08);
+}
+
+.coin-buttons button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #555;
+}
+
+.return-form {
+    margin-top: 18px;
+}
+
+.return-money-button {
+    padding: 13px 35px;
+    border: none;
+    border-radius: 10px;
+    background: #202020;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.return-money-button:hover {
+    background: #000;
+}
+
+.product-output {
+    width: 55%;
+    margin: 24px auto 0;
+    padding: 20px;
+    background: #181818;
+    border: 6px solid #4d080b;
+    border-radius: 10px;
+    color: #ddd;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 5px;
+    box-shadow: inset 0 0 12px #000;
+}
+
+@media (max-width: 650px) {
+
+    .vending-machine {
+        padding: 17px;
+        border-width: 5px;
+        border-radius: 24px;
+    }
+
+    .machine-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .display-panel {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .vending-window {
+        padding: 14px;
+    }
+
+    .vending-products {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+        gap: 11px;
+    }
+
+    .vending-product {
+        padding: 12px 8px;
+    }
+
+    .drink-image span {
+        font-size: 47px;
+    }
+
+    .vending-product h2 {
+        font-size: 17px;
+    }
+
+    .product-output {
+        box-sizing: border-box;
+        width: 90%;
+    }
+}
+.money-box {
+    text-align: center;
+}
+
+.money-box form {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.money-box input {
+    width: 250px;
+    padding: 13px;
+    border: 2px solid #777;
+    border-radius: 9px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.money-box button {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 9px;
+    background: #1976d2;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.money-note {
+    margin-top: 12px;
+    color: #555;
+    font-size: 14px;
+}
